@@ -17,7 +17,6 @@ if not ALBUM_URL_REGEX.match(args.album_url):
     print("Error: Invalid imx.to album URL")
     exit(1)
 
-# Retrieve the contents of the webpage
 response = requests.get(args.album_url)
 
 # Parse the HTML using BeautifulSoup
@@ -32,15 +31,12 @@ links = soup.find_all("a")
 # If the output file was specified, open it for writing
 if args.output:
     with open(args.output, "w") as f:
-        # Loop through the anchor tags and write the href attribute to the output file if it starts with "https://imx.to" and we haven't seen it before
         for link in links:
             href = link["href"]
             if href.startswith("https://imx.to") and href not in seen_urls:
                 f.write(href + "\n")
                 seen_urls.add(href)
-# If the output file was not specified, print the URLs to the console
 else:
-    # Loop through the anchor tags and print the href attribute if it starts with "https://imx.to" and we haven't seen it before
     for link in links:
         href = link["href"]
         if href.startswith("https://imx.to") and href not in seen_urls:
