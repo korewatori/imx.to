@@ -2,7 +2,7 @@
 Here are some scripts that I made to obtain information from albums uploaded to the file hosting website https://imx.to
 
 ## Usage
-### get_image_id_urls.py
+### imx.py
 ```
 Usage: imx.py [-h] [-o OUTPUT] command album_url
 
