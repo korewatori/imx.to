@@ -24,15 +24,15 @@ response = requests.get(args.album_url)
 soup = BeautifulSoup(response.text, "html.parser")
 
 if args.command == "info":
-    # Find the title of the album by searching for the 'h1' element with the class 'post-title'
+    # Find the title of the album
     title_element = soup.select('.title')[0]
     title = title_element.text
 
-    # Find the image count by searching for the element with the '.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)' CSS selector
+    # Find the image count via CSS selector
     image_count_element = soup.select('.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)')[0]
     image_count = image_count_element.text
 
-    # Find the file size by searching for the element with the '.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(2)' CSS selector
+    # Find the file size by via CSS selector
     file_size_element = soup.select('.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(2)')[0]
     file_size = file_size_element.text
 
