@@ -13,7 +13,6 @@ parser.add_argument("album_url", help="URL of the imx.to album")
 parser.add_argument("-o", "--output", help="Path to the output file (optional)")
 args = parser.parse_args()
 
-# Check if the URL is a valid imx.to album URL
 if not ALBUM_URL_REGEX.match(args.album_url):
     print("Error: Invalid imx.to album URL")
     exit(1)
@@ -24,32 +23,27 @@ response = requests.get(args.album_url)
 soup = BeautifulSoup(response.text, "html.parser")
 
 if args.command == "info":
-    # Find the title of the album
     title_element = soup.select('.title')[0]
-    title = title_element.text
+    title = title_element.text.strip()
 
-    # Find the image count via CSS selector
     image_count_element = soup.select('.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)')[0]
     image_count = image_count_element.text
 
-    # Find the file size by via CSS selector
     file_size_element = soup.select('.slider-wrapper > div:nth-child(2) > div:nth-child(1) > span:nth-child(2)')[0]
     file_size = file_size_element.text
 
-    # Print the information we gathered
     print(f'Title: {title}')
     print(f'Number of files: {image_count}')
     print(f'Size: {file_size}')
     print(f'URL: {args.album_url}')
 
 elif args.command == "links":
-    # Create a set to store the URLs that we have already seen
+    # Store the URLs that we have already seen in a set
     seen_urls = set()
 
     # Find all anchor tags
     links = soup.find_all("a")
 
-    # If the output file was specified, open it for writing
     if args.output:
         with open(args.output, "w") as f:
             for link in links:
